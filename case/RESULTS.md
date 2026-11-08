@@ -66,3 +66,22 @@ modelled from the code: the tank's valve window, a helicopter phase (Q is blocke
 
 Still running: a per-rule funnel (how many layouts pass a, b, c, d separately and together) and a second, fully
 reified clpfd implementation that must agree with the first on all 672 results.
+
+## Final (08.11, 02:05): two independent models, and they corrected the early numbers
+
+The early run above is superseded. A second, fully reified clpfd implementation (every ability a 0/1 bit, "ability
+covers category" via #<==>) had to agree with the first on every layout of all three profiles. It did not at first:
+the cross-check found a real bug in the first model, `forall(..., T = 0)` never bound the clpfd variable, so an ability
+with no teaching obstacle was counted as taught for free (exactly the pitfall the skill warns about). After the fix the
+two agree on all results (self-test 12/12).
+
+- Funnel (profile b, budget 20): 1536 raw layouts -> 672 after learnability (d) -> 392 after the redesign budget.
+  Rules (a) comfort and (c) bosses-can-be-a-mix removed nothing: they hold for every layout. No layout reaches the
+  advantage band without redesigning obstacles (0 of 1536).
+- Today: of 21 measured jumps Sal is clearly better on 15, Ben on 0. Retuning Ben's numbers does not change that.
+- Best: Ben gnaw (hold F) + Sal tail lash (Shift): 14 of 50 obstacles redesigned (vs 24 with no new ability), edges
+  18 and 18, 3 boss patterns. Cheapest meaningful: Ben gnaw only, 16 redesigns, one new key.
+- TLC on 3 boss phases: today a one-rat win with zero Q exists on all three (9 / 18 / 12 steps); under every proposal
+  there is none, and a mixed win exists (18-45 steps, 3-11 Q). Surprise from TLC: the mix itself needs no new ability
+  ("Ben's dash opens, Sal's double jump finishes" already works once the windows are >= 1.0 s); new abilities only add
+  more mix patterns. Sweeps: the duel needs a window >= 1.0 s, the tank >= 1.5 s; the helicopter needs >= 3 hearts.

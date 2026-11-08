@@ -25,20 +25,22 @@ Skip it for feel, geometry, visuals and timing polish, and for small input space
 
 ![Prolog result](case/prolog-result.png)
 
-**Prolog** searched 672 combinations (112 ability sets, 6 retunings of Ben's numbers):
+**Prolog** searched 1536 layouts (8 candidate abilities, retunings of Ben's numbers); 672 are learnable, 392 fit a budget of 20 redesigned obstacles:
 
-- Today Sal is clearly better on 5 of 50 obstacles and Ben on 7, and Ben's 7 are only gates he must ram and armoured enemies. The feeling was right.
-- Retuning Ben's jump and dash barely changes anything: Sal's double jump is never worse than Ben's dash on any measured jump.
-- Two new moves for Ben plus a swap relay give Sal 18 and Ben 23, and cut the obstacles I have to redesign from 24 to 13.
+- Today Sal is clearly better on 15 of 21 measured jumps, Ben on none. The feeling was right, and retuning Ben's jump and dash does not change it.
+- None of the 1536 layouts reaches the balance without redesigning obstacles.
+- Best: Ben gnaws, Sal lashes with his tail. Each rat gets the edge on 18 obstacles, and I redesign 14 obstacles instead of 24.
+
+**The model caught itself.** I wrote the Prolog model twice, the second one fully reified, and made them agree on every layout. They did not at first: the second one found a bug in the first, `forall(..., T = 0)` never bound the clpfd variable, so an ability nobody teaches came for free. That is the first pitfall listed in `SKILL.md`. The early numbers I posted were wrong because of it; the ones above are from the fixed, cross-checked run.
 
 ![TLA+ result](case/tla-result.png)
 
 **TLA+** on three real boss phases (tank valve, helicopter, duel):
 
-- Today one rat wins every phase without a single swap. The tank goes down in 9 steps.
-- With Prolog's top 5 layouts no solo win exists on any phase, and the pair still wins (18 to 47 steps, 4 to 12 swaps).
+- Today one rat wins every phase without a single swap (9, 18 and 12 steps).
+- Under every Prolog proposal no solo win exists, and the pair still wins (18 to 45 steps, 3 to 11 swaps).
+- Surprise: the pair itself needs no new ability. Ben's dash opens and Sal's double jump finishes once the attack windows are long enough: at least 1.0 s in the duel and 1.5 s at the tank. The helicopter needs at least 3 hearts, because swapping is blocked inside its grabs. New abilities only add more ways to combine.
 - Control runs fail as they should: give the opener and the finisher to the same rat and TLC finds a solo win again.
-- The sweeps give the limits: the pair only works with vulnerable windows of at least 1.0 s (duel) and 1.5 s (tank), and the helicopter needs at least 3 hearts.
 
 Full numbers and caveats: [case/RESULTS.md](case/RESULTS.md). Some inputs are designer assumptions (enemy counts, scores of non-jump obstacles), and the report says which.
 
